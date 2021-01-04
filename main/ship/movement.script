@@ -1,0 +1,80 @@
+
+local ROTATION_PER_SECOND = math.pi / 1.5
+local ACCELERATION = 5 -- unit/s*s
+local MAX_VELOCITY = 2.5 -- unit/s
+
+local TICK = hash("tick")
+
+local function calc_go_target_angle(target, diff)
+	local ga = math.rad(go.get(".", "euler.z") + diff)
+	local gv = vmath.vector3(math.sin(ga), -math.cos(ga), 0)
+	local tv = go.get_position() - target
+	return math.acos(vmath.dot(gv, tv) / vmath.length(tv))
+end
+
+function move_to_target(self, x, y)
+	local evt,dt = coroutine.yield()
+	local target = vmath.vector3(x,y,0)
+	while evt == TICK do
+		local a = calc_go_target_angle(target, 0)
+		local b = calc_go_target_angle(target, -1)
+
+		ra = math.min(ROTATION_PER_SECOND * dt, a)
+		if a == a then
+			if a > b then
+				go.set_rotation(go.get_rotation() * vmath.quat_rotation_z(-ra))
+			else
+				go.set_rotation(go.get_rotation() * vmath.quat_rotation_z(ra))
+			end
+		end
+
+		local ga = math.rad(go.get(".", "euler.z"))
+		local gv = vmath.vector3(math.sin(ga), -math.cos(ga), 0)
+		local tv = go.get_position() - target
+		local acos = vmath.dot(gv, tv) / vmath.length(tv)
+		if acos > 0.9 then
+			self.velocity = self.velocity - tv/vmath.length(tv) * ACCELERATION * dt * acos * acos
+		end
+		
+		evt,dt = coroutine.yield()
+	end
+end
+
+function init(self)
+	self.velocity = vmath.vector3()
+end
+
+function final(self)
+end
+
+function update(self, dt)
+	if self.co ~= nil and coroutine.status(self.co) ~= "dead" then
+		local ok,err = coroutine.resume(self.co, TICK, dt)
+		if not ok then error(err, 2) end
+	end
+
+	if vmath.length(self.velocity) > MAX_VELOCITY then
+		self.velocity = self.velocity * MAX_VELOCITY / vmath.length(self.velocity)
+	end
+	go.set_position(go.get_position() + self.velocity)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("move_target") then
+		local x,y = unpack(message)
+		self.co = coroutine.create(move_to_target)
+		local ok,err = coroutine.resume(self.co, self, x, y)
+		if not ok then error(err, 2) end
+
+	elseif message_id == hash("cancel_target") then
+		coroutine.resume(self.co, -1)
+	
+	elseif message_id == hash("trigger_response") then
+		if message.other_group == hash("move_target") then
+			coroutine.resume(self.co, -1)
+		end
+	end
+end
+
+function on_reload(self)
+end

@@ -1,0 +1,41 @@
+local fixed_center = require("render.fixed_center")
+
+local CIRCLE_RADIUS = 30
+
+local TOUCH = hash("touch")
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	msg.post(".", "disable")
+end
+
+function final(self)
+	msg.post(".", "release_input_focus")
+end
+
+function on_message(self, message_id, message)
+	if message_id == hash("trigger_response") then
+		if message.other_group == hash("ship") then
+			msg.post(".", "disable")
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == TOUCH and action.pressed then
+		local x,y = fixed_center.frame_to_world(action.x, action.y)
+		local p = vmath.vector3(x, y, 0)
+		local c = go.get_position()
+		if (p.x - c.x)^2 + (p.y - c.y)^2 < CIRCLE_RADIUS^2 then
+			msg.post(".", "disable")
+			msg.post("ship#movement", "cancel_target")
+		else
+			go.set_position(p)
+			msg.post(".", "enable")
+			msg.post("ship#movement", "move_target", {x,y})
+		end
+	end
+end
+
+function on_reload(self)
+end

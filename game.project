@@ -1,0 +1,18 @@
+[bootstrap]
+main_collection = /main/main.collectionc
+render = /render/fixed_center.renderc
+
+[script]
+shared_state = 1
+
+[display]
+width = 682
+height = 448
+
+[android]
+input_method = HiddenInputField
+
+[project]
+title = Asteroids
+version = 0.1
+
