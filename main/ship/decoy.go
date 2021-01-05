@@ -1,6 +1,6 @@
 components {
-  id: "movement"
-  component: "/main/ship/movement.script"
+  id: "script"
+  component: "/main/ship/decoy.script"
   position {
     x: 0.0
     y: 0.0
@@ -11,26 +11,6 @@ components {
     y: 0.0
     z: 0.0
     w: 1.0
-  }
-}
-components {
-  id: "border"
-  component: "/main/common/border.script"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  properties {
-    id: "sprite_url"
-    value: "ship#sprite"
-    type: PROPERTY_TYPE_URL
   }
 }
 embedded_components {
@@ -87,24 +67,6 @@ embedded_components {
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
-  ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-embedded_components {
-  id: "decoy_factory"
-  type: "factory"
-  data: "prototype: \"/main/ship/decoy.go\"\n"
-  "load_dynamically: false\n"
   ""
   position {
     x: 0.0

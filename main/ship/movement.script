@@ -1,23 +1,57 @@
 
+local fixed_center = require("render.fixed_center")
+
 local ROTATION_PER_SECOND = math.pi / 1.5
 local ACCELERATION = 5 -- unit/s*s
 local MAX_VELOCITY = 2.5 -- unit/s
 
 local TICK = hash("tick")
 
-local function calc_go_target_angle(target, diff)
-	local ga = math.rad(go.get(".", "euler.z") + diff)
+local function calc_go_target_angle(p, t, d)
+	local ga = math.rad(go.get(".", "euler.z") + d)
 	local gv = vmath.vector3(math.sin(ga), -math.cos(ga), 0)
-	local tv = go.get_position() - target
+	local tv = p - t
 	return math.acos(vmath.dot(gv, tv) / vmath.length(tv))
+end
+
+local function find_offset(ta)
+	local l,t,r,b = fixed_center.get_rect()
+	local w = r - l
+	local h = t - b
+	local p = go.get_position()
+	local pl = {
+		{p, 0 ,0},
+		{vmath.vector3(p.x, p.y+h, 0), 0, h},
+		{vmath.vector3(p.x+w, p.y+h, 0), w, h},
+		{vmath.vector3(p.x+w, p.y, 0), w, 0},
+		{vmath.vector3(p.x+w, p.y-h, 0), w, -h},
+		{vmath.vector3(p.x, p.y-h, 0), 0, -h},
+		{vmath.vector3(p.x-w, p.y-h, 0), -w, -h},
+		{vmath.vector3(p.x-w, p.y, 0), -w, 0},
+		{vmath.vector3(p.x-w, p.y+h, 0), -w, h}
+	}
+	local si = 1
+	local sl = vmath.length(p-ta)
+	for i,p in ipairs(pl) do
+		local l = vmath.length(p[1]-ta)
+		if l < sl then
+			si = i
+			sl = l
+		end
+	end
+	local pi = pl[si]
+	return vmath.vector3(pi[2], pi[3], 0)
 end
 
 function move_to_target(self, x, y)
 	local evt,dt = coroutine.yield()
-	local target = vmath.vector3(x,y,0)
+	local ta = vmath.vector3(x,y,0)
+	local of = find_offset(ta)
 	while evt == TICK do
-		local a = calc_go_target_angle(target, 0)
-		local b = calc_go_target_angle(target, -1)
+		local p = go.get_position() + of
+		
+		local a = calc_go_target_angle(p, ta, 0)
+		local b = calc_go_target_angle(p, ta, -1)
 
 		ra = math.min(ROTATION_PER_SECOND * dt, a)
 		if a == a then
@@ -30,10 +64,13 @@ function move_to_target(self, x, y)
 
 		local ga = math.rad(go.get(".", "euler.z"))
 		local gv = vmath.vector3(math.sin(ga), -math.cos(ga), 0)
-		local tv = go.get_position() - target
+		local tv = p - ta
 		local acos = vmath.dot(gv, tv) / vmath.length(tv)
 		if acos > 0.9 then
 			self.velocity = self.velocity - tv/vmath.length(tv) * ACCELERATION * dt * acos * acos
+			sprite.play_flipbook("#sprite", hash("ship_thrust"))
+		else
+			sprite.play_flipbook("#sprite", hash("ship_idle"))
 		end
 		
 		evt,dt = coroutine.yield()
@@ -44,9 +81,6 @@ function init(self)
 	self.velocity = vmath.vector3()
 end
 
-function final(self)
-end
-
 function update(self, dt)
 	if self.co ~= nil and coroutine.status(self.co) ~= "dead" then
 		local ok,err = coroutine.resume(self.co, TICK, dt)
@@ -55,6 +89,7 @@ function update(self, dt)
 
 	if vmath.length(self.velocity) > MAX_VELOCITY then
 		self.velocity = self.velocity * MAX_VELOCITY / vmath.length(self.velocity)
+		sprite.play_flipbook("#sprite", hash("ship_idle"))
 	end
 	go.set_position(go.get_position() + self.velocity)
 end
