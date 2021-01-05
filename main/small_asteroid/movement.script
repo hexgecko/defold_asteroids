@@ -1,0 +1,15 @@
+go.property("angle", 30)
+go.property("velocity", 100)
+go.property("rotation_speed", 180)
+
+function init(self)
+	self.dir_quat = vmath.quat_rotation_z(math.rad(-self.angle))
+	self.up = vmath.vector3(0, 1, 0)
+end
+
+function update(self, dt)
+	local p = go.get_position()
+	local r = go.get_rotation()
+	go.set_position(p + vmath.rotate(self.dir_quat, self.up) * self.velocity * dt)
+	go.set_rotation(r * vmath.quat_rotation_z(math.rad(-self.rotation_speed*dt)))
+end

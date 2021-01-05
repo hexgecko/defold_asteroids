@@ -27,10 +27,35 @@ components {
     z: 0.0
     w: 1.0
   }
-  properties {
-    id: "sprite_url"
-    value: "ship#sprite"
-    type: PROPERTY_TYPE_URL
+}
+components {
+  id: "collision"
+  component: "/main/ship/collision.script"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+components {
+  id: "explotion"
+  component: "/main/ship/explotion.particlefx"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
   }
 }
 embedded_components {
@@ -63,6 +88,7 @@ embedded_components {
   "restitution: 0.5\n"
   "group: \"ship\"\n"
   "mask: \"move_target\"\n"
+  "mask: \"asteroid\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"

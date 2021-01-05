@@ -1,4 +1,138 @@
 name: "main"
+instances {
+  id: "asteroid_01"
+  prototype: "/main/small_asteroid/small_asteroid.go"
+  position {
+    x: 300.0
+    y: 226.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.25881904
+    w: 0.9659258
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "asteroid_02"
+  prototype: "/main/small_asteroid/small_asteroid.go"
+  position {
+    x: 625.0
+    y: 226.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: -0.25881904
+    w: 0.9659258
+  }
+  component_properties {
+    id: "movement"
+    properties {
+      id: "angle"
+      value: "167.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "velocity"
+      value: "150.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "rotation_speed"
+      value: "210.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "asteroid_03"
+  prototype: "/main/small_asteroid/small_asteroid.go"
+  position {
+    x: 300.0
+    y: 498.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.9998477
+    w: 0.017452406
+  }
+  component_properties {
+    id: "movement"
+    properties {
+      id: "angle"
+      value: "-74.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "velocity"
+      value: "80.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "rotation_speed"
+      value: "120.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "asteroid_04"
+  prototype: "/main/small_asteroid/small_asteroid.go"
+  position {
+    x: 122.0
+    y: 113.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.25881904
+    w: 0.9659258
+  }
+  component_properties {
+    id: "movement"
+    properties {
+      id: "angle"
+      value: "-34.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "velocity"
+      value: "120.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "rotation_speed"
+      value: "100.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
 collection_instances {
   id: "ship"
   collection: "/main/ship.collection"
