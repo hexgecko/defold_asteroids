@@ -1,30 +1,34 @@
+go.property("sprite_fraction", hash("sprite"))
+go.property("decoy_factory_fraction", hash("decoy_factory"))
+
 local fixed_center = require("render.fixed_center")
 
-local function create_decoy(x, y, width, height)
-	return factory.create("#decoy_factory", nil, nil, {
+local function create_decoy(self, x, y, width, height)
+	return factory.create(self.decoy_factory_url, nil, nil, {
 		offset = vmath.vector3(x, y, 0),
 		frame_size = vmath.vector3(width, height, 0)
 	})
 end
 
-local function create_decoy_list(left, top, right, bottom)
+local function create_decoy_list(self, left, top, right, bottom)
 	local width = right - left
 	local height = top - bottom
 	return {
-		north = create_decoy(0, 1, width, height),
-		north_east = create_decoy(1, 1, width, height),
-		east = create_decoy(1, 0, width, height),
-		south_east = create_decoy(1, -1, width, height),
-		south = create_decoy(0, -1, width, height),
-		south_west = create_decoy(-1, -1, width, height),
-		west = create_decoy(-1, 0, width, height),
-		north_west = create_decoy(-1, 1, width, height)
+		north = create_decoy(self, 0, 1, width, height),
+		north_east = create_decoy(self, 1, 1, width, height),
+		east = create_decoy(self, 1, 0, width, height),
+		south_east = create_decoy(self, 1, -1, width, height),
+		south = create_decoy(self, 0, -1, width, height),
+		south_west = create_decoy(self, -1, -1, width, height),
+		west = create_decoy(self, -1, 0, width, height),
+		north_west = create_decoy(self, -1, 1, width, height)
 	}
 end
 
 function init(self)
-	self.sprite_size = go.get("#sprite", "size")
-	self.decoy_list = create_decoy_list(fixed_center.get_rect())
+	self.decoy_factory_url = msg.url(nil, nil, self.decoy_factory_fraction)
+	self.sprite_size = go.get(msg.url(nil, nil, self.sprite_fraction), "size")
+	self.decoy_list = create_decoy_list(self, fixed_center.get_rect())
 	msg.post("@render:", "subscribe_frame_resized")
 end
 

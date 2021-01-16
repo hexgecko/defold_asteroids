@@ -1,7 +1,7 @@
 
 local fixed_center = require("render.fixed_center")
 
-local ROTATION_PER_SECOND = math.pi / 1.5
+local ROTATION_PER_SECOND = math.pi
 local ACCELERATION = 5 -- unit/s*s
 local MAX_VELOCITY = 2.5 -- unit/s
 
@@ -78,7 +78,7 @@ function move_to_target(self, x, y)
 end
 
 function init(self)
-	self.velocity = vmath.vector3()
+	self.velocity = vmath.vector3(0, 0.1, 0)
 end
 
 function update(self, dt)
@@ -107,6 +107,18 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("trigger_response") then
 		if message.other_group == hash("move_target") then
 			coroutine.resume(self.co, -1)
+		end
+
+	elseif message_id == hash("get_position_velocity") then
+		local is_ship_destroyed = go.get("#collision", "destroyed")
+		local is_bullet_active = go.get("bullet#movement", "active")
+		if is_ship_destroyed == false and is_bullet_active == false then
+			local r = go.get(".", "rotation")
+			msg.post(sender, hash("position_velocity"), {
+				go.get_position(),
+				vmath.rotate(r, vmath.vector3(0, 1, 0)),
+				r
+			})
 		end
 	end
 end

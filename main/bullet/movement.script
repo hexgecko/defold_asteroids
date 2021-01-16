@@ -1,0 +1,38 @@
+go.property("speed", 400)
+go.property("active", false)
+
+function init(self)
+	self.up = vmath.vector3(0, self.speed, 0)
+	self.p0 = go.get(".", "position")
+	msg.post(".", "disable")
+end
+
+function update(self, dt)
+	local p = go.get(".", "position")
+	local r = go.get(".", "rotation")
+	go.set(".", "position", p + vmath.rotate(r, self.up)*dt)
+
+	if vmath.length(self.p0 - p) > 500 then
+		msg.post(".", "disable")
+		go.set("#", "active", false)
+		self.p0 = p
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("fire") then
+		go.set(".", "rotation", message.rotation)
+		go.set(".", "position", message.position)
+		go.set("#", "active", true)
+		msg.post(".", "enable")
+	
+	elseif message_id == hash("trigger_response") then
+		if message.other_group == hash("asteroid") then
+			go.set("#", "active", false)
+			msg.post(".", "disable")
+		end
+	end
+end
+
+function on_reload(self)
+end
