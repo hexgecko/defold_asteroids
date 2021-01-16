@@ -34,6 +34,7 @@ end
 
 function final(self)
 	msg.post("@render:", "unsubscribe_frame_resized")
+	for _,decoy in pairs(self.decoy_list) do go.delete(decoy) end
 end
 
 function update(self)

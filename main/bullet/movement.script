@@ -1,6 +1,8 @@
 go.property("speed", 400)
 go.property("active", false)
 
+local fixed_center = require("render.fixed_center")
+
 function init(self)
 	self.up = vmath.vector3(0, self.speed, 0)
 	self.p0 = go.get(".", "position")
@@ -12,7 +14,8 @@ function update(self, dt)
 	local r = go.get(".", "rotation")
 	go.set(".", "position", p + vmath.rotate(r, self.up)*dt)
 
-	if vmath.length(self.p0 - p) > 500 then
+	local l,t,r,b = fixed_center.get_rect()
+	if p.x < l or p.x > r or p.y < b or p.y > t then
 		msg.post(".", "disable")
 		go.set("#", "active", false)
 		self.p0 = p

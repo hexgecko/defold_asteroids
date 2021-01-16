@@ -1,14 +1,14 @@
 go.property("angle", 30)
-go.property("velocity", 100)
+go.property("speed", 100)
 go.property("rotation_speed", 180)
 
 local TRACK_INTERVAL = 0.1
-local CIRCLE_RADIUS = 28
+local CIRCLE_RADIUS = 38
 
 function init(self)
 	-- calculate the velocity vector for the asteroid
 	local rq = vmath.quat_rotation_z(math.rad(-self.angle))
-	local up = vmath.vector3(0, self.velocity, 0)
+	local up = vmath.vector3(0, self.speed, 0)
 	self.velocity = vmath.rotate(rq, up)
 
 	-- get the bullet speed
@@ -27,6 +27,23 @@ function update(self, dt)
 	go.set_rotation(r * vmath.quat_rotation_z(math.rad(-self.rotation_speed * dt)))
 end
 
+local function spread_small_asteroid(self)
+	for i=1,360,90 do
+		local angle = i - 30 + math.random(60)
+		local speed = self.speed - 30 + math.random(60)
+		local rotation_speed = math.random(5)
+		local rad_angle = math.rad(angle)
+		local spread_vector = vmath.vector3(math.sin(rad_angle), math.cos(rad_angle), 0)
+		local pos = go.get_position() + spread_vector*40
+		local rot = vmath.quat_rotation_z(angle)
+		factory.create("#small_asteriod_factory", pos, rot, {
+			angle = angle,
+			speed = speed,
+			rotation_speed = rotation_speed
+		})
+	end
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == hash("position_velocity") then
 		local a,u,r = unpack(message)
@@ -42,7 +59,6 @@ function on_message(self, message_id, message, sender)
 			-- msg.post("@render:", "draw_line", { start_point=a, end_point=ps, color = vmath.vector4(1,0,0,1) } )
 			-- msg.post("@render:", "draw_line", { start_point=b, end_point=pa, color = vmath.vector4(0,1,0,1) } )
 			if (pa.x - ps.x)^2 + (pa.y - ps.y)^2 < CIRCLE_RADIUS^2 then
-				print("fire")
 				msg.post("ship/bullet#movement", hash("fire"), {
 					position = a,
 					rotation = r
@@ -50,9 +66,11 @@ function on_message(self, message_id, message, sender)
 			end
 		end
 	elseif message_id == hash("trigger_response") then
-		pprint(message)
 		if message.other_group == hash("bullet") then
-			go.delete()
+			spread_small_asteroid(self)
+			particlefx.play("#explotion", function()
+				go.delete()
+			end)
 		end
 	end
 end

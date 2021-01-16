@@ -1,7 +1,7 @@
 name: "main"
 instances {
   id: "asteroid_01"
-  prototype: "/main/small_asteroid/small_asteroid.go"
+  prototype: "/main/asteroid_small/asteroid_small.go"
   position {
     x: 300.0
     y: 226.0
@@ -21,7 +21,7 @@ instances {
 }
 instances {
   id: "asteroid_02"
-  prototype: "/main/small_asteroid/small_asteroid.go"
+  prototype: "/main/asteroid_small/asteroid_small.go"
   position {
     x: 625.0
     y: 226.0
@@ -41,7 +41,7 @@ instances {
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
-      id: "velocity"
+      id: "speed"
       value: "150.0"
       type: PROPERTY_TYPE_NUMBER
     }
@@ -59,7 +59,7 @@ instances {
 }
 instances {
   id: "asteroid_03"
-  prototype: "/main/small_asteroid/small_asteroid.go"
+  prototype: "/main/asteroid_small/asteroid_small.go"
   position {
     x: 300.0
     y: 498.0
@@ -79,7 +79,7 @@ instances {
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
-      id: "velocity"
+      id: "speed"
       value: "80.0"
       type: PROPERTY_TYPE_NUMBER
     }
@@ -97,7 +97,7 @@ instances {
 }
 instances {
   id: "asteroid_04"
-  prototype: "/main/small_asteroid/small_asteroid.go"
+  prototype: "/main/asteroid_small/asteroid_small.go"
   position {
     x: 122.0
     y: 113.0
@@ -117,7 +117,7 @@ instances {
       type: PROPERTY_TYPE_NUMBER
     }
     properties {
-      id: "velocity"
+      id: "speed"
       value: "120.0"
       type: PROPERTY_TYPE_NUMBER
     }
@@ -126,6 +126,26 @@ instances {
       value: "100.0"
       type: PROPERTY_TYPE_NUMBER
     }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "asteroid_05"
+  prototype: "/main/asteroid_big/asteroid_big.go"
+  position {
+    x: 120.0
+    y: 365.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
   }
   scale3 {
     x: 1.0
