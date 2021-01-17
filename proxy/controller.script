@@ -1,0 +1,33 @@
+local SHOW_MENU = hash("show_menu")
+local SHOW_LEVEL_01 = hash("show_level_01")
+local PROXY_LOADED = hash("proxy_loaded")
+
+local function show(self, proxy)
+	if self.current_proxy ~= nil then
+		msg.post(self.current_proxy, "disable")
+		msg.post(self.current_proxy, "unload")
+		self.current_proxy = nil
+	end
+	msg.post(proxy, "async_load")
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	msg.post(".", SHOW_MENU)
+end
+
+function final(self)
+	msg.post(".", "release_input_focus")
+end
+
+function on_message(self, message_id, message, sender)
+	print(message_id)
+	if message_id == SHOW_MENU then
+		show(self, "#menu_proxy")
+	elseif message_id == SHOW_LEVEL_01 then
+		show(self, "#level_01_proxy")
+	elseif message_id == PROXY_LOADED then
+		self.current_proxy = sender
+		msg.post(sender, "enable")	
+	end
+end

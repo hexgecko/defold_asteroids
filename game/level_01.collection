@@ -1,7 +1,7 @@
 name: "main"
 instances {
   id: "asteroid_01"
-  prototype: "/main/asteroid/asteroid_small/asteroid_small.go"
+  prototype: "/game/asteroid/asteroid_small/asteroid_small.go"
   position {
     x: 300.0
     y: 226.0
@@ -21,7 +21,7 @@ instances {
 }
 instances {
   id: "asteroid_02"
-  prototype: "/main/asteroid/asteroid_small/asteroid_small.go"
+  prototype: "/game/asteroid/asteroid_small/asteroid_small.go"
   position {
     x: 625.0
     y: 226.0
@@ -59,7 +59,7 @@ instances {
 }
 instances {
   id: "asteroid_03"
-  prototype: "/main/asteroid/asteroid_small/asteroid_small.go"
+  prototype: "/game/asteroid/asteroid_small/asteroid_small.go"
   position {
     x: 300.0
     y: 498.0
@@ -97,7 +97,7 @@ instances {
 }
 instances {
   id: "asteroid_04"
-  prototype: "/main/asteroid/asteroid_small/asteroid_small.go"
+  prototype: "/game/asteroid/asteroid_small/asteroid_small.go"
   position {
     x: 122.0
     y: 113.0
@@ -135,7 +135,7 @@ instances {
 }
 instances {
   id: "asteroid_05"
-  prototype: "/main/asteroid/asteroid_big/asteroid_big.go"
+  prototype: "/game/asteroid/asteroid_big/asteroid_big.go"
   position {
     x: 120.0
     y: 365.0
@@ -155,7 +155,7 @@ instances {
 }
 collection_instances {
   id: "ship"
-  collection: "/main/ship.collection"
+  collection: "/game/ship.collection"
   position {
     x: 0.0
     y: 0.0

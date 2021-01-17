@@ -1,6 +1,6 @@
 components {
   id: "movement"
-  component: "/main/asteroid/movement.script"
+  component: "/game/ship/movement.script"
   position {
     x: 0.0
     y: 0.0
@@ -15,22 +15,7 @@ components {
 }
 components {
   id: "border"
-  component: "/main/common/border.script"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-components {
-  id: "explotion"
-  component: "/main/asteroid/explotion.particlefx"
+  component: "/game/common/border.script"
   position {
     x: 0.0
     y: 0.0
@@ -45,7 +30,22 @@ components {
 }
 components {
   id: "collision"
-  component: "/main/asteroid/asteroid_small/collision.script"
+  component: "/game/ship/collision.script"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+components {
+  id: "explotion"
+  component: "/game/ship/explotion.particlefx"
   position {
     x: 0.0
     y: 0.0
@@ -61,13 +61,13 @@ components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "tile_set: \"/main/main.atlas\"\n"
-  "default_animation: \"asteroid_small\"\n"
+  data: "tile_set: \"/game/main.atlas\"\n"
+  "default_animation: \"ship_idle\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
   position {
-    x: -1.0
+    x: 0.0
     y: 0.0
     z: 0.0
   }
@@ -86,15 +86,15 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"asteroid\"\n"
-  "mask: \"ship\"\n"
-  "mask: \"bullet\"\n"
+  "group: \"ship\"\n"
+  "mask: \"move_target\"\n"
+  "mask: \"asteroid\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
-  "    shape_type: TYPE_SPHERE\n"
+  "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      x: -2.0\n"
-  "      y: -5.0\n"
+  "      x: 0.0\n"
+  "      y: -18.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -104,45 +104,13 @@ embedded_components {
   "      w: 1.0\n"
   "    }\n"
   "    index: 0\n"
-  "    count: 1\n"
+  "    count: 3\n"
   "  }\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"
   "    position {\n"
-  "      x: -3.0\n"
-  "      y: 6.0\n"
-  "      z: 0.0\n"
-  "    }\n"
-  "    rotation {\n"
   "      x: 0.0\n"
-  "      y: 0.0\n"
-  "      z: 0.0\n"
-  "      w: 1.0\n"
-  "    }\n"
-  "    index: 1\n"
-  "    count: 1\n"
-  "  }\n"
-  "  shapes {\n"
-  "    shape_type: TYPE_SPHERE\n"
-  "    position {\n"
-  "      x: 9.0\n"
-  "      y: 5.0\n"
-  "      z: 0.0\n"
-  "    }\n"
-  "    rotation {\n"
-  "      x: 0.0\n"
-  "      y: 0.0\n"
-  "      z: 0.0\n"
-  "      w: 1.0\n"
-  "    }\n"
-  "    index: 2\n"
-  "    count: 1\n"
-  "  }\n"
-  "  shapes {\n"
-  "    shape_type: TYPE_SPHERE\n"
-  "    position {\n"
-  "      x: 9.0\n"
-  "      y: -5.0\n"
+  "      y: 15.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -154,10 +122,44 @@ embedded_components {
   "    index: 3\n"
   "    count: 1\n"
   "  }\n"
-  "  data: 14.8585\n"
-  "  data: 15.3845\n"
+  "  shapes {\n"
+  "    shape_type: TYPE_SPHERE\n"
+  "    position {\n"
+  "      x: 0.0\n"
+  "      y: 3.0\n"
+  "      z: 0.0\n"
+  "    }\n"
+  "    rotation {\n"
+  "      x: 0.0\n"
+  "      y: 0.0\n"
+  "      z: 0.0\n"
+  "      w: 1.0\n"
+  "    }\n"
+  "    index: 4\n"
+  "    count: 1\n"
+  "  }\n"
+  "  shapes {\n"
+  "    shape_type: TYPE_SPHERE\n"
+  "    position {\n"
+  "      x: 0.0\n"
+  "      y: -10.0\n"
+  "      z: 0.0\n"
+  "    }\n"
+  "    rotation {\n"
+  "      x: 0.0\n"
+  "      y: 0.0\n"
+  "      z: 0.0\n"
+  "      w: 1.0\n"
+  "    }\n"
+  "    index: 5\n"
+  "    count: 1\n"
+  "  }\n"
+  "  data: 16.7615\n"
+  "  data: 6.607\n"
   "  data: 10.0\n"
-  "  data: 10.0\n"
+  "  data: 12.6665\n"
+  "  data: 17.0675\n"
+  "  data: 15.3335\n"
   "}\n"
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
@@ -178,7 +180,7 @@ embedded_components {
 embedded_components {
   id: "decoy_factory"
   type: "factory"
-  data: "prototype: \"/main/asteroid/asteroid_small/decoy.go\"\n"
+  data: "prototype: \"/game/ship/decoy.go\"\n"
   "load_dynamically: false\n"
   ""
   position {

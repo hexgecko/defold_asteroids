@@ -1,21 +1,6 @@
 components {
-  id: "movement"
-  component: "/main/ship/movement.script"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-components {
   id: "border"
-  component: "/main/common/border.script"
+  component: "/game/common/border.script"
   position {
     x: 0.0
     y: 0.0
@@ -30,7 +15,22 @@ components {
 }
 components {
   id: "collision"
-  component: "/main/ship/collision.script"
+  component: "/game/asteroid/asteroid_big/collision.script"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+components {
+  id: "movement"
+  component: "/game/asteroid/movement.script"
   position {
     x: 0.0
     y: 0.0
@@ -45,7 +45,7 @@ components {
 }
 components {
   id: "explotion"
-  component: "/main/ship/explotion.particlefx"
+  component: "/game/asteroid/explotion.particlefx"
   position {
     x: 0.0
     y: 0.0
@@ -61,8 +61,8 @@ components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "tile_set: \"/main/main.atlas\"\n"
-  "default_animation: \"ship_idle\"\n"
+  data: "tile_set: \"/game/main.atlas\"\n"
+  "default_animation: \"asteroid_big\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
@@ -86,15 +86,15 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"ship\"\n"
-  "mask: \"move_target\"\n"
-  "mask: \"asteroid\"\n"
+  "group: \"asteroid\"\n"
+  "mask: \"ship\"\n"
+  "mask: \"bullet\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
-  "    shape_type: TYPE_BOX\n"
+  "    shape_type: TYPE_SPHERE\n"
   "    position {\n"
-  "      x: 0.0\n"
-  "      y: -18.0\n"
+  "      x: -4.0\n"
+  "      y: 8.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -104,44 +104,12 @@ embedded_components {
   "      w: 1.0\n"
   "    }\n"
   "    index: 0\n"
-  "    count: 3\n"
-  "  }\n"
-  "  shapes {\n"
-  "    shape_type: TYPE_SPHERE\n"
-  "    position {\n"
-  "      x: 0.0\n"
-  "      y: 15.0\n"
-  "      z: 0.0\n"
-  "    }\n"
-  "    rotation {\n"
-  "      x: 0.0\n"
-  "      y: 0.0\n"
-  "      z: 0.0\n"
-  "      w: 1.0\n"
-  "    }\n"
-  "    index: 3\n"
   "    count: 1\n"
   "  }\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"
   "    position {\n"
-  "      x: 0.0\n"
-  "      y: 3.0\n"
-  "      z: 0.0\n"
-  "    }\n"
-  "    rotation {\n"
-  "      x: 0.0\n"
-  "      y: 0.0\n"
-  "      z: 0.0\n"
-  "      w: 1.0\n"
-  "    }\n"
-  "    index: 4\n"
-  "    count: 1\n"
-  "  }\n"
-  "  shapes {\n"
-  "    shape_type: TYPE_SPHERE\n"
-  "    position {\n"
-  "      x: 0.0\n"
+  "      x: 2.0\n"
   "      y: -10.0\n"
   "      z: 0.0\n"
   "    }\n"
@@ -151,15 +119,11 @@ embedded_components {
   "      z: 0.0\n"
   "      w: 1.0\n"
   "    }\n"
-  "    index: 5\n"
+  "    index: 1\n"
   "    count: 1\n"
   "  }\n"
-  "  data: 16.7615\n"
-  "  data: 6.607\n"
-  "  data: 10.0\n"
-  "  data: 12.6665\n"
-  "  data: 17.0675\n"
-  "  data: 15.3335\n"
+  "  data: 32.941\n"
+  "  data: 32.941\n"
   "}\n"
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
@@ -178,9 +142,27 @@ embedded_components {
   }
 }
 embedded_components {
+  id: "small_asteriod_factory"
+  type: "factory"
+  data: "prototype: \"/game/asteroid/asteroid_small/asteroid_small.go\"\n"
+  "load_dynamically: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
   id: "decoy_factory"
   type: "factory"
-  data: "prototype: \"/main/ship/decoy.go\"\n"
+  data: "prototype: \"/game/asteroid/asteroid_big/decoy.go\"\n"
   "load_dynamically: false\n"
   ""
   position {

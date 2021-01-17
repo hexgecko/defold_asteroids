@@ -1,6 +1,6 @@
 components {
-  id: "decoy"
-  component: "/main/common/decoy.script"
+  id: "touching"
+  component: "/game/move_target/touching.script"
   position {
     x: 0.0
     y: 0.0
@@ -16,8 +16,8 @@ components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "tile_set: \"/main/main.atlas\"\n"
-  "default_animation: \"asteroid_small\"\n"
+  data: "tile_set: \"/game/main.atlas\"\n"
+  "default_animation: \"move_target\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
   ""
@@ -41,7 +41,7 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"asteroid\"\n"
+  "group: \"move_target\"\n"
   "mask: \"ship\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
@@ -60,7 +60,7 @@ embedded_components {
   "    index: 0\n"
   "    count: 1\n"
   "  }\n"
-  "  data: 20.0\n"
+  "  data: 15.0\n"
   "}\n"
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"

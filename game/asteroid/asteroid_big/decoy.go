@@ -1,6 +1,6 @@
 components {
   id: "decoy"
-  component: "/main/common/decoy.script"
+  component: "/game/common/decoy.script"
   position {
     x: 0.0
     y: 0.0
@@ -79,7 +79,7 @@ embedded_components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "tile_set: \"/main/main.atlas\"\n"
+  data: "tile_set: \"/game/main.atlas\"\n"
   "default_animation: \"asteroid_big\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
