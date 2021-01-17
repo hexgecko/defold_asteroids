@@ -76,5 +76,9 @@ function on_message(self, message_id, message)
 				height = top - bottom
 			})
 		end
+	elseif message_id == hash("destroyed") then
+		for _,decoy in pairs(self.decoy_list) do
+			msg.post(decoy, "disable")
+		end
 	end
 end

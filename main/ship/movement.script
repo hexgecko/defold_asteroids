@@ -1,9 +1,9 @@
 
 local fixed_center = require("render.fixed_center")
 
-local ROTATION_PER_SECOND = math.pi
-local ACCELERATION = 5 -- unit/s*s
-local MAX_VELOCITY = 2.5 -- unit/s
+local ROTATION_PER_SECOND = math.pi / 1.3
+local ACCELERATION = 6 -- unit/s*s
+local MAX_VELOCITY = 2.7 -- unit/s
 
 local TICK = hash("tick")
 
@@ -103,6 +103,7 @@ function on_message(self, message_id, message, sender)
 
 	elseif message_id == hash("cancel_target") then
 		coroutine.resume(self.co, -1)
+		sprite.play_flipbook("#sprite", hash("ship_idle"))
 	
 	elseif message_id == hash("trigger_response") then
 		if message.other_group == hash("move_target") then

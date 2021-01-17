@@ -1,0 +1,12 @@
+local TRIGGER_RESPONSE = hash("trigger_response")
+local BULLET = hash("bullet")
+
+function on_message(self, message_id, message, sender)
+	if message_id == TRIGGER_RESPONSE then
+		if message.other_group == BULLET then
+			particlefx.play("#explotion", function()
+				go.delete()
+			end)
+		end
+	end
+end

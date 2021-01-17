@@ -1,19 +1,4 @@
 components {
-  id: "movement"
-  component: "/main/asteroid_big/movement.script"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-components {
   id: "border"
   component: "/main/common/border.script"
   position {
@@ -29,8 +14,38 @@ components {
   }
 }
 components {
+  id: "collision"
+  component: "/main/asteroid/asteroid_big/collision.script"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+components {
+  id: "movement"
+  component: "/main/asteroid/movement.script"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+components {
   id: "explotion"
-  component: "/main/asteroid_big/explotion.particlefx"
+  component: "/main/asteroid/explotion.particlefx"
   position {
     x: 0.0
     y: 0.0
@@ -129,7 +144,7 @@ embedded_components {
 embedded_components {
   id: "small_asteriod_factory"
   type: "factory"
-  data: "prototype: \"/main/asteroid_small/asteroid_small.go\"\n"
+  data: "prototype: \"/main/asteroid/asteroid_small/asteroid_small.go\"\n"
   "load_dynamically: false\n"
   ""
   position {
@@ -147,7 +162,7 @@ embedded_components {
 embedded_components {
   id: "decoy_factory"
   type: "factory"
-  data: "prototype: \"/main/asteroid_big/decoy.go\"\n"
+  data: "prototype: \"/main/asteroid/asteroid_big/decoy.go\"\n"
   "load_dynamically: false\n"
   ""
   position {

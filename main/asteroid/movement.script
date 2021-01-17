@@ -3,7 +3,7 @@ go.property("speed", 100)
 go.property("rotation_speed", 180)
 
 local TRACK_INTERVAL = 0.1
-local CIRCLE_RADIUS = 38
+local CIRCLE_RADIUS = 28
 
 function init(self)
 	-- calculate the velocity vector for the asteroid
@@ -27,23 +27,6 @@ function update(self, dt)
 	go.set_rotation(r * vmath.quat_rotation_z(math.rad(-self.rotation_speed * dt)))
 end
 
-local function spread_small_asteroid(self)
-	for i=1,360,90 do
-		local angle = i - 30 + math.random(60)
-		local speed = self.speed - 30 + math.random(60)
-		local rotation_speed = math.random(5)
-		local rad_angle = math.rad(angle)
-		local spread_vector = vmath.vector3(math.sin(rad_angle), math.cos(rad_angle), 0)
-		local pos = go.get_position() + spread_vector*40
-		local rot = vmath.quat_rotation_z(angle)
-		factory.create("#small_asteriod_factory", pos, rot, {
-			angle = angle,
-			speed = speed,
-			rotation_speed = rotation_speed
-		})
-	end
-end
-
 function on_message(self, message_id, message, sender)
 	if message_id == hash("position_velocity") then
 		local a,u,r = unpack(message)
@@ -64,13 +47,6 @@ function on_message(self, message_id, message, sender)
 					rotation = r
 				})
 			end
-		end
-	elseif message_id == hash("trigger_response") then
-		if message.other_group == hash("bullet") then
-			spread_small_asteroid(self)
-			particlefx.play("#explotion", function()
-				go.delete()
-			end)
 		end
 	end
 end
