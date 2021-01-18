@@ -1,5 +1,10 @@
 function init(self)
 	self.speed = go.get("#movement", "speed")
+	msg.post("/next_level#script", "register_asteroid")
+end
+
+function final(self)
+	msg.post("/next_level#script", "asteroid_destroyed")
 end
 
 local function spread_small_asteroid(self)

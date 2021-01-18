@@ -1,0 +1,14 @@
+go.property("level", 1)
+go.property("game_over", false)
+
+function init(self)
+	msg.post(".", "disable")
+	msg.post("#restart", "level", { level = self.level })
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("game_over") then
+		go.set("#", "game_over", true)
+		msg.post(".", "enable")
+	end
+end

@@ -7,8 +7,12 @@ function on_message(self, message_id, message)
 			msg.post("#border", "destroyed")
 			particlefx.play("#explotion", function()
 				msg.post(".", "disable")
+				msg.post("/restart#script", "game_over") 
 				go.set("#", "destroyed", true)
 			end)
 		end
 	end
+end
+
+function on_reload(self)
 end

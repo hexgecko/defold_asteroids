@@ -17,7 +17,12 @@ instances {
     id: "movement"
     properties {
       id: "angle"
-      value: "0.0"
+      value: "-30.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "speed"
+      value: "130.0"
       type: PROPERTY_TYPE_NUMBER
     }
   }
@@ -31,8 +36,8 @@ instances {
   id: "restart"
   prototype: "/game/gui/restart/restart.go"
   position {
-    x: -690.0
-    y: 0.0
+    x: 0.0
+    y: -451.0
     z: 0.0
   }
   rotation {
@@ -40,6 +45,14 @@ instances {
     y: 0.0
     z: 0.0
     w: 1.0
+  }
+  component_properties {
+    id: "script"
+    properties {
+      id: "level"
+      value: "2.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
   }
   scale3 {
     x: 1.0
@@ -51,8 +64,8 @@ instances {
   id: "next_level"
   prototype: "/game/gui/next_level/next_level.go"
   position {
-    x: 0.0
-    y: -448.0
+    x: -682.0
+    y: 0.0
     z: 0.0
   }
   rotation {
@@ -65,7 +78,40 @@ instances {
     id: "script"
     properties {
       id: "next_level"
-      value: "2.0"
+      value: "1.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "asteroid_02"
+  prototype: "/game/asteroid/asteroid_small/asteroid_small.go"
+  position {
+    x: 715.0
+    y: 387.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.25881904
+    w: 0.9659258
+  }
+  component_properties {
+    id: "movement"
+    properties {
+      id: "angle"
+      value: "45.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "rotation_speed"
+      value: "100.0"
       type: PROPERTY_TYPE_NUMBER
     }
   }

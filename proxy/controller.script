@@ -1,5 +1,5 @@
 local SHOW_MENU = hash("show_menu")
-local SHOW_LEVEL_01 = hash("show_level_01")
+local SHOW_LEVEL = hash("show_level")
 local PROXY_LOADED = hash("proxy_loaded")
 
 local function show(self, proxy)
@@ -21,11 +21,11 @@ function final(self)
 end
 
 function on_message(self, message_id, message, sender)
-	print(message_id)
 	if message_id == SHOW_MENU then
 		show(self, "#menu_proxy")
-	elseif message_id == SHOW_LEVEL_01 then
-		show(self, "#level_01_proxy")
+	elseif message_id == SHOW_LEVEL then
+		local level = string.format("%02d", message.level)
+		show(self, "#level_"..level.."_proxy")
 	elseif message_id == PROXY_LOADED then
 		self.current_proxy = sender
 		msg.post(sender, "enable")	

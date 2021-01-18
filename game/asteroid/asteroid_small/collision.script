@@ -1,6 +1,14 @@
 local TRIGGER_RESPONSE = hash("trigger_response")
 local BULLET = hash("bullet")
 
+function init(self)
+	msg.post("/next_level#script", "register_asteroid")
+end
+
+function final(self)
+	msg.post("/next_level#script", "asteroid_destroyed")
+end
+
 function on_message(self, message_id, message, sender)
 	if message_id == TRIGGER_RESPONSE then
 		if message.other_group == BULLET then
