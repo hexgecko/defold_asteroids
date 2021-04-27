@@ -15,7 +15,7 @@ local function calc_go_target_angle(p, t, d)
 end
 
 local function find_offset(ta)
-	local l,t,r,b = fixed_center.get_rect()
+	local l,t,r,b = fixed_center.get_viewport_rect()
 	local w = r - l
 	local h = t - b
 	local p = go.get_position()
